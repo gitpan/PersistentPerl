@@ -91,6 +91,8 @@
 
 #include "perperl.h"
 
+extern char **environ;
+
 module MODULE_VAR_EXPORT persistentperl_module;
 
 static int talk_to_be(
@@ -126,7 +128,6 @@ static const char *set_option(cmd_parms *cmd, void *dummy, char *arg)
  */
 static void cgi_init(server_rec *s, pool *p)
 {
-    extern char **environ;
     static const char *prog_argv[2];
 
     /* Initialize perperl options */

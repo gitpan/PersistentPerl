@@ -26,6 +26,7 @@ static int saved_pid;
 static int savecore;
 #endif
 
+extern char **environ;
 
 int perperl_util_pref_fd(int oldfd, int newfd) {
     if (newfd == oldfd || newfd == PREF_FD_DONTCARE || oldfd == -1)
@@ -54,7 +55,7 @@ static void end_profiling(int dowrites) {
 }
 #endif
 
-PERPERL_INLINE int perperl_util_geteuid() {
+PERPERL_INLINE int perperl_util_geteuid(void) {
     if (my_euid == -1)
 	my_euid = geteuid();
     return my_euid;
@@ -69,7 +70,7 @@ int perperl_util_seteuid(int id) {
 }
 #endif
 
-PERPERL_INLINE int perperl_util_getuid() {
+PERPERL_INLINE int perperl_util_getuid(void) {
     static int uid = -1;
     if (uid == -1)
 	uid = getuid();
@@ -85,17 +86,16 @@ int perperl_util_argc(const char * const * argv) {
 }
 #endif
 
-PERPERL_INLINE int perperl_util_getpid() {
+PERPERL_INLINE int perperl_util_getpid(void) {
     if (!saved_pid) saved_pid = getpid();
     return saved_pid;
 }
 
-void perperl_util_pid_invalidate() {
+void perperl_util_pid_invalidate(void) {
     saved_pid = 0;
 }
 
 static void just_die(const char *fmt, va_list ap) {
-    extern int errno;
     char buf[2048];
 
     sprintf(buf, "%s[%u]: ", PERPERL_PROGNAME, (int)getpid());
@@ -129,7 +129,6 @@ void perperl_util_die_quiet(const char *fmt, ...) {
 }
 
 int perperl_util_execvp(const char *filename, const char *const *argv) {
-    extern char **environ;
 
     /* Get original argv */
     environ = (char **)perperl_opt_exec_envp();
@@ -156,31 +155,31 @@ PERPERL_INLINE void perperl_util_gettimeofday(struct timeval *tv) {
     *tv = saved_time;
 }
 
-PERPERL_INLINE int perperl_util_time() {
+PERPERL_INLINE int perperl_util_time(void) {
     struct timeval tv;
     perperl_util_gettimeofday(&tv);
     return tv.tv_sec;
 }
 
-PERPERL_INLINE void perperl_util_time_invalidate() {
+void perperl_util_time_invalidate(void) {
     saved_time.tv_sec = 0;
 }
 
 char *perperl_util_fname(int num, char type) {
     char *fname;
-    int uid = perperl_util_getuid(), my_euid = perperl_util_geteuid();
+    int uid = perperl_util_getuid(), euid = perperl_util_geteuid();
 
     perperl_new(fname, strlen(OPTVAL_TMPBASE) + 80, char);
 
-    if (my_euid == uid)
-	sprintf(fname, "%s.%x.%x.%c", OPTVAL_TMPBASE, num, my_euid, type);
+    if (euid == uid)
+	sprintf(fname, "%s.%x.%x.%c", OPTVAL_TMPBASE, num, euid, type);
     else
-	sprintf(fname, "%s.%x.%x.%x.%c", OPTVAL_TMPBASE, num, my_euid, uid, type);
+	sprintf(fname, "%s.%x.%x.%x.%c", OPTVAL_TMPBASE, num, euid, uid, type);
 
     return fname;
 }
 
-char *perperl_util_getcwd() {
+char *perperl_util_getcwd(void) {
     char *buf, *cwd_ret;
     int size = 512, too_small;
 
@@ -282,9 +281,11 @@ void perperl_util_exit(int status, int underbar_exit) {
 #   ifdef PERPERL_DEBUG
 	if (savecore) {
 	    char buf[200];
+	    struct timeval tv;
 
 	    mkdir("/tmp/perperl_core", 0777);
-	    sprintf(buf, "/tmp/perperl_core/%d", getpid());
+	    gettimeofday(&tv, NULL);
+	    sprintf(buf, "/tmp/perperl_core/%d.%06d.%d", (int)tv.tv_sec, (int)tv.tv_usec, getpid());
 	    mkdir(buf, 0777);
 	    chdir(buf);
 	    kill(getpid(), SIGFPE);

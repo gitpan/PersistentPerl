@@ -35,21 +35,21 @@ typedef struct {
 } PersistentBuf;
 
 int perperl_util_pref_fd(int oldfd, int newfd);
-PERPERL_INLINE int perperl_util_getuid();
-PERPERL_INLINE int perperl_util_geteuid();
+PERPERL_INLINE int perperl_util_getuid(void);
+PERPERL_INLINE int perperl_util_geteuid(void);
 int perperl_util_seteuid(int id);
 int perperl_util_argc(const char * const * argv);
-PERPERL_INLINE int perperl_util_getpid();
-void perperl_util_pid_invalidate();
+PERPERL_INLINE int perperl_util_getpid(void);
+void perperl_util_pid_invalidate(void);
 void perperl_util_die(const char *fmt, ...);
 void perperl_util_die_quiet(const char *fmt, ...);
 int perperl_util_execvp(const char *filename, const char *const *argv);
 char *perperl_util_strndup(const char *s, int len);
-PERPERL_INLINE int perperl_util_time();
+PERPERL_INLINE int perperl_util_time(void);
 PERPERL_INLINE void perperl_util_gettimeofday(struct timeval *tv);
-PERPERL_INLINE void perperl_util_time_invalidate();
+void perperl_util_time_invalidate(void);
 char *perperl_util_fname(int num, char type);
-char *perperl_util_getcwd();
+char *perperl_util_getcwd(void);
 PersistentMapInfo *perperl_util_mapin(int fd, int max_size, int file_size);
 void perperl_util_mapout(PersistentMapInfo *mi);
 PERPERL_INLINE PersistentDevIno perperl_util_stat_devino(const struct stat *stbuf);
@@ -73,3 +73,23 @@ int perperl_util_kill(pid_t pid, int sig);
 #else
 #define PREF_FD_FILE		PREF_FD_DONTCARE
 #endif
+
+#ifdef PERPERL_DEBUG
+
+#if !defined(RLIM_INFINITY) || !defined(RLIMIT_CORE)
+#include <sys/resource.h>
+#endif
+
+#define perperl_util_unlimit_core() \
+    { \
+	struct rlimit rlimitvals; \
+	rlimitvals.rlim_cur = RLIM_INFINITY; \
+	rlimitvals.rlim_max = RLIM_INFINITY; \
+	setrlimit(RLIMIT_CORE, &rlimitvals); \
+    }
+
+#else
+
+#define perperl_util_unlimit_core()
+
+#endif /* PERPERL_DEBUG */

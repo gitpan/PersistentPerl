@@ -17,7 +17,6 @@
  *
  */
 
-void perperl_perl_init();
+void perperl_perl_init(void);
 void perperl_perl_run(slotnum_t _gslotnum, slotnum_t _bslotnum);
-void perperl_abort(const char *s);
-int perperl_perl_fork();
+int perperl_perl_fork(void);

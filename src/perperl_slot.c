@@ -77,7 +77,7 @@ void perperl_slot_insert_sorted(
 #endif
 
 /* Allocate a slot */
-slotnum_t perperl_slot_alloc() {
+slotnum_t perperl_slot_alloc(void) {
     slotnum_t slotnum;
 
     /* Try to get a slot from the beginning of the free list */

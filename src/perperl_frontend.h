@@ -27,7 +27,7 @@ void perperl_frontend_proto2(int err_sock, int first_byte);
 void perperl_frontend_remove_running(const slotnum_t fslotnum);
 int perperl_frontend_collect_status
     (const slotnum_t fslotnum, int *exit_on_sig, int *exit_val);
-void perperl_frontend_clean_running();
+void perperl_frontend_clean_running(void);
 
 /* For strings shorter than this, use a one-byte string length when sending
  * strings from the frontend to the backend

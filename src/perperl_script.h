@@ -17,12 +17,12 @@
  *
  */
 
-slotnum_t perperl_script_find();
-int  perperl_script_changed();
-void perperl_script_close();
-int  perperl_script_open();
-const struct stat *perperl_script_getstat();
-int  perperl_script_open_failure();
-void perperl_script_munmap();
+slotnum_t perperl_script_find(void);
+int  perperl_script_changed(void);
+void perperl_script_close(void);
+int  perperl_script_open(void);
+const struct stat *perperl_script_getstat(void);
+int  perperl_script_open_failure(void);
+void perperl_script_munmap(void);
 PersistentMapInfo *perperl_script_mmap(int max_size);
-void perperl_script_missing();
+void perperl_script_missing(void);

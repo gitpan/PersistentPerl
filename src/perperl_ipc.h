@@ -22,7 +22,7 @@
 
 void perperl_ipc_listen(slotnum_t slotnum);
 void perperl_ipc_listen_fixfd(slotnum_t slotnum);
-void perperl_ipc_unlisten();
+void perperl_ipc_unlisten(void);
 int  perperl_ipc_connect(slotnum_t slotnum, const int socks[NUMFDS]);
 void perperl_ipc_connect_prepare(int socks[NUMFDS]);
 int  perperl_ipc_accept_ready(int wakeup);

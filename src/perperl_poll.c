@@ -76,8 +76,6 @@ void perperl_poll_init(PollInfo *pi, int maxfd) {
     perperl_poll_reset(pi);
 }
 
-void perperl_poll_free(PollInfo *pi) { }
-
 void perperl_poll_reset(PollInfo *pi) {
     FD_ZERO(pi->fdset + 0);
     FD_ZERO(pi->fdset + 1);

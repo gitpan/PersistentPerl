@@ -21,7 +21,7 @@ void perperl_group_invalidate(slotnum_t gslotnum);
 void perperl_group_sendsigs(slotnum_t gslotnum);
 void perperl_group_cleanup(slotnum_t gslotnum);
 int perperl_group_connect_locked(slotnum_t gslotnum);
-slotnum_t perperl_group_create();
+slotnum_t perperl_group_create(void);
 pid_t perperl_group_be_starting(slotnum_t gslotnum);
 int perperl_group_parent_sig(slotnum_t gslotnum, int sig);
 int perperl_group_start_be(slotnum_t gslotnum);

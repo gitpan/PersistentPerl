@@ -19,13 +19,13 @@
 
 typedef struct _file_head {
     struct timeval	create_time;
+    pid_t		lock_owner;
     slotnum_t		group_head;
     slotnum_t		group_tail;
     slotnum_t		slot_free;
     slotnum_t		slots_alloced;
     slotnum_t		fe_run_head;
     slotnum_t		fe_run_tail;
-    unsigned char	file_corrupt;
     unsigned char	file_removed;
 } file_head_t;
 
@@ -35,7 +35,7 @@ typedef struct _file {
 } perperl_file_t;
 
 #define FILE_ALLOC_CHUNK	512
-#define FILE_REV		5
+#define FILE_REV		6
 #define FILE_HEAD		(perperl_file_maddr->file_head)
 #define FILE_SLOTS		(perperl_file_maddr->slots)
 #define FILE_SLOT(member, n)	(FILE_SLOTS[SLOT_CHECK(n)-1].slot_u.member)
@@ -49,8 +49,8 @@ typedef struct _file {
 #define FS_CORRUPT	3	/* Locked, mmaped, non-atomic writes to file */
 
 extern perperl_file_t *perperl_file_maddr;
-PERPERL_INLINE void perperl_file_fd_is_suspect();
-int perperl_file_size();
+PERPERL_INLINE void perperl_file_fd_is_suspect(void);
+int perperl_file_size(void);
 PERPERL_INLINE int perperl_file_set_state(int new_state);
-void perperl_file_need_reopen();
-void perperl_file_fork_child();
+void perperl_file_need_reopen(void);
+void perperl_file_fork_child(void);

@@ -27,6 +27,6 @@
 #define perperl_free(s)		free(s)
 #define perperl_new(s,n,t)	do {(s) = (t*)malloc((n)*sizeof(t));} while (0)
 #define perperl_renew(s,n,t)	do {(s) = (t*)realloc((s),(n)*sizeof(t));} while (0)
-#define perperl_execvp(f,a)	execvp(f,(char *const*)a)
+#define perperl_execvp(f,a)	execvp(f,(char * const *)a)
 
 void perperl_abort(const char *s);

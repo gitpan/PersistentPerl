@@ -18,7 +18,7 @@
  */
 
 void perperl_backend_dispose(slotnum_t gslotnum, slotnum_t bslotnum);
-slotnum_t perperl_backend_be_wait_get(slotnum_t gslotnum, slotnum_t fslotnum);
+slotnum_t perperl_backend_be_wait_get(slotnum_t gslotnum);
 void perperl_backend_be_wait_put(slotnum_t gslotnum, slotnum_t bslotnum);
 slotnum_t perperl_backend_create_slot(slotnum_t gslotnum);
 void perperl_backend_remove_be_wait(slotnum_t gslotnum);

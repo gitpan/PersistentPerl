@@ -32,3 +32,5 @@ int perperl_sig_got(const SigList *sl, int sig);
 void perperl_sig_wait(SigList *sl);
 void perperl_sig_init(SigList *sl, const int *sigs, int numsigs, int how);
 void perperl_sig_free(const SigList *sl);
+void perperl_sig_blockall(void);
+void perperl_sig_blockall_undo(void);

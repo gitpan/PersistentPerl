@@ -23,18 +23,18 @@ static struct stat	script_stat;
 static int		script_fd;
 static time_t		last_open;
 
-void perperl_script_close() {
+void perperl_script_close(void) {
     if (last_open)
 	close(script_fd);
     last_open = 0;
 }
 
-void perperl_script_missing() {
+void perperl_script_missing(void) {
     DIE_QUIET("Missing script filename.  "
 	"Type \"perldoc " PERPERL_PKGNAME "\" for PersistentPerl documentation.");
 }
 
-int perperl_script_open_failure() {
+int perperl_script_open_failure(void) {
     time_t now = perperl_util_time();
     const char *fname;
 
@@ -53,7 +53,7 @@ int perperl_script_open_failure() {
     return 0;
 }
 
-int perperl_script_open() {
+int perperl_script_open(void) {
     switch (perperl_script_open_failure()) {
 	case 1:
 	    perperl_script_missing();
@@ -66,7 +66,7 @@ int perperl_script_open() {
 }
 
 #ifdef PERPERL_FRONTEND
-int perperl_script_changed() {
+int perperl_script_changed(void) {
     struct stat stbuf;
 
     if (!last_open)
@@ -80,12 +80,12 @@ int perperl_script_changed() {
 }
 #endif
 
-const struct stat *perperl_script_getstat() {
+const struct stat *perperl_script_getstat(void) {
     perperl_script_open();
     return &script_stat;
 }
 
-slotnum_t perperl_script_find() {
+slotnum_t perperl_script_find(void) {
     slotnum_t gslotnum, next, name_match = 0;
     int single_script = DOING_SINGLE_SCRIPT;
     
@@ -176,7 +176,7 @@ slotnum_t perperl_script_find() {
 
 static PersistentMapInfo *script_mapinfo;
 
-void perperl_script_munmap() {
+void perperl_script_munmap(void) {
     if (script_mapinfo) {
 	perperl_util_mapout(script_mapinfo);
 	script_mapinfo = NULL;

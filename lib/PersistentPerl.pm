@@ -24,7 +24,7 @@ package PersistentPerl;
 
 use strict;
 use vars qw($VERSION);
-$VERSION = '2.20';
+$VERSION = '2.21';
 
 ## use vars qw($VERSION @ISA @EXPORT @EXPORT_OK);
 ## 
@@ -119,7 +119,7 @@ __END__
 
 =head1 NAME
 
-PersistentPerl - Speed up perl scripts by running them persistently
+PersistentPerl - Speed up perl scripts by running them persistently.
 
 =head1 SYNOPSIS
 
@@ -290,7 +290,7 @@ During perl execution via the PersistentPerl module's getopt/setopt methods.
 =item BackendProg
 
     Command Line    : -p<string>
-    Default Value   : "/usr/bin/perperl_backend"
+    Default Value   : "/home/sam/pkg/perl-5.8.0/bin/perperl_backend"
     Context         : mod_persistentperl, perperl
 
     Description:
@@ -809,7 +809,7 @@ The group feature in PersistentPerl can be used to help reduce the amount of
 memory used by the perl interpreters.  When groups are not used (ie when
 group name is "none"), each perl script is given its own set of perl
 interpreters, separate from the perl interpreters used for other scripts.
-In PersistentPerl each perl interpreter is also a separate unix process.
+In PersistentPerl each perl interpreter is also a separate system process.
 
 When grouping is used, perl interpreters are put into a group.  All perl
 interpreters in that group can run perl scripts in that same group.
@@ -859,13 +859,12 @@ scripts won't run within the same interpreter as your other scripts.
 
 =item * To pass different perl or PersistentPerl parameters to different scripts.
 
-The first script to start up in a group sets the perl and PersistentPerl
-parameters used from then on for all scripts in that group.  You may want to
-use separate groups to create separate policies for different scripts.
+You may want to use separate groups to create separate policies for
+different scripts.
 
 Say you have an email application that contains ten perl scripts, and since
 the common perl code used in this application has a bad memory leak, you want
-to user a MaxRuns setting of 5 for all of these scripts.  You then want all
+to use a MaxRuns setting of 5 for all of these scripts.  You then want all
 your other scripts to run in a separate group with a normal MaxRuns policy.
 What you can do is edit the ten email scripts, and at the top, put in the line:
 

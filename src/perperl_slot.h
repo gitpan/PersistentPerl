@@ -102,7 +102,7 @@ typedef struct _dummy_slot {
 	} \
     } while (0)
 
-slotnum_t perperl_slot_alloc();
+slotnum_t perperl_slot_alloc(void);
 void perperl_slot_free(slotnum_t slotnum);
 slotnum_t perperl_slot_check(slotnum_t slotnum);
 void perperl_slot_remove(slotnum_t slotnum, slotnum_t *head, slotnum_t *tail);

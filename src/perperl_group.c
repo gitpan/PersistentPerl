@@ -119,7 +119,7 @@ void perperl_group_cleanup(slotnum_t gslotnum) {
     SLOT_FREE(gslotnum, "group (perperl_group_cleanup)");
 }
 
-slotnum_t perperl_group_create() {
+slotnum_t perperl_group_create(void) {
     slotnum_t gslotnum;
 
     gslotnum = SLOT_ALLOC("group (perperl_group_create)");
