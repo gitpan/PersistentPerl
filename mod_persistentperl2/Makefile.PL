@@ -1,6 +1,6 @@
 
 #
-# Copyright (C) 2002  Sam Horrocks
+# Copyright (C) 2003  Sam Horrocks
 # 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -41,6 +41,6 @@ sub clean_files_extra {qw(.libs *.lo *.slo t mod_persistentperl.so)}
 sub mod_persistentperl_cmds {'../src/mod_persistentperl2_cmds.c'}
 
 # Need symlinks for tests.
-symlink("../mod_persistentperl/t", "t");
+symlink("../mod_persistentperl/t", "t") || die "Can't create symlinks for tests";
 
 PersistentMake::mod_persistentperl2->init->write_makefile;

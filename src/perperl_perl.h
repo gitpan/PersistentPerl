@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002  Sam Horrocks
+ * Copyright (C) 2003  Sam Horrocks
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -20,3 +20,5 @@
 void perperl_perl_init(void);
 void perperl_perl_run(slotnum_t _gslotnum, slotnum_t _bslotnum);
 int perperl_perl_fork(void);
+
+PerlInterpreter  *my_perl;

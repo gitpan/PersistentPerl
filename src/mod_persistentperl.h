@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002  Sam Horrocks
+ * Copyright (C) 2003  Sam Horrocks
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -25,9 +25,10 @@
 #define perperl_memmove(d,s,n)	memmove(d,s,n)
 #define perperl_bzero(s,n)	memset(s,'\0',n)
 #define perperl_free(s)		free(s)
-#define perperl_new(s,n,t)	do {(s) = (t*)malloc((n)*sizeof(t));} while (0)
+#define perperl_new(s,n,t)	\
+    do { (s) = (t*)malloc((n)*sizeof(t)); } while (0)
 #define perperl_renew(s,n,t)	\
-	do {(s) = (t*)realloc((s),(n)*sizeof(t));} while (0)
+    do {(s) = (t*)realloc((s),(n)*sizeof(t));} while (0)
 
 void perperl_abort(const char *s);
 int  perperl_execvp(const char *filename, const char *const *argv);

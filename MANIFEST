@@ -50,6 +50,7 @@ perperl/t/basic1.t
 perperl/t/basic2.t
 perperl/t/begin_block.t
 perperl/t/begin_dup.t
+perperl/t/be_memleak.t
 perperl/t/cgi_reset.t
 perperl/t/chdir.t
 perperl/t/detach.t
@@ -69,6 +70,7 @@ perperl/t/scripts/basic.1
 perperl/t/scripts/basic.2
 perperl/t/scripts/begin_block
 perperl/t/scripts/begin_dup
+perperl/t/scripts/be_memleak
 perperl/t/scripts/cgi_reset
 perperl/t/scripts/chdir
 perperl/t/scripts/detach
@@ -152,6 +154,7 @@ util/build_package
 util/build_rpms
 util/build_solpkg
 util/check_syms
+util/patch_efence
 util/perlvars
 util/README
 util/remove_libs

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2002  Sam Horrocks
+ * Copyright (C) 2003  Sam Horrocks
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -67,6 +67,12 @@ typedef struct {
 #define PERPERL_PKGNAME	"PersistentPerl"
 #define PERPERL_PKG(s)	PERPERL_PKGNAME "::" s
 
+#ifdef PERPERL_EFENCE
+#   define PERPERL_REALLOC_MULT 1
+#else
+#   define PERPERL_REALLOC_MULT 2
+#endif
+
 #ifdef _WIN32
 typedef DWORD pid_t;
 #endif
@@ -85,4 +91,6 @@ typedef DWORD pid_t;
 #include "perperl_script.h"
 #include "perperl_circ.h"
 #include "perperl_cb.h"
-#include "perperl_perl.h"
+#ifdef PERPERL_BACKEND
+#    include "perperl_perl.h"
+#endif

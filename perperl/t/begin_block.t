@@ -13,5 +13,5 @@ sub am_perperl { my $prog = shift;
     return $v ne '' && $v > 0;
 }
 
-print &am_perperl($Config{perlpath}) ? "failed\n" : "ok\n";
-print &am_perperl($ENV{PERPERL})      ? "ok\n"     : "failed\n";
+print &am_perperl($Config{perlpath}) ? "not ok\n" : "ok\n";
+print &am_perperl($ENV{PERPERL})      ? "ok\n"     : "not ok\n";
